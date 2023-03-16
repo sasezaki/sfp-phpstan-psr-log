@@ -24,7 +24,7 @@ class ContextRequireExceptionKeyRule implements Rule
         'debug'
     ];
 
-    private const ERROR_MISSED_EXCEPTION_KEY = 'Parameter $context of logger method %s requires \'exception\' key. Current scope has Throwable variable - %s';
+    private const ERROR_MISSED_EXCEPTION_KEY = 'Parameter $context of logger method Psr\Log\LoggerInterface::%s() requires \'exception\' key. Current scope has Throwable variable - %s';
 
     public function getNodeType() : string
     {
