@@ -24,8 +24,7 @@ class ContextRequireExceptionKeyRule implements Rule
         'debug'
     ];
 
-//    private const ERROR_MISSED_EXCEPTION_KEY = 'Psr\Log\LoggerInterface method called without context \'exception\' key. $%s->%s(, [%s])';
-    private const ERROR_MISSED_EXCEPTION_KEY = 'Parameter $context of logger method %s expects \'exception\' key. Current scope has Throwable variable - %s';
+    private const ERROR_MISSED_EXCEPTION_KEY = 'Parameter $context of logger method %s requires \'exception\' key. Current scope has Throwable variable - %s';
 
     public function getNodeType() : string
     {
@@ -72,12 +71,6 @@ class ContextRequireExceptionKeyRule implements Rule
 
         if (! isset($args[$contextArgumentNo])) {
             return [sprintf(self::ERROR_MISSED_EXCEPTION_KEY, $methodName, "\${$throwable}")];
-//            return [sprintf(
-//                self::ERROR_MISSED_EXCEPTION_KEY,
-//                $node->var->name ?? 'class@anonymous',
-//                $methodName,
-//                "'exception' => \${$throwable}"
-//            )];
         }
 
         $context = $args[$contextArgumentNo];
@@ -88,12 +81,6 @@ class ContextRequireExceptionKeyRule implements Rule
 
         if ($context instanceof Node\Arg && self::contextDoesNotHavExceptionKey($context)) {
             return [sprintf(self::ERROR_MISSED_EXCEPTION_KEY, $methodName, "\${$throwable}")];
-//            return [sprintf(
-//                self::ERROR_MISSED_EXCEPTION_KEY,
-//                $node->var->name ?? 'class@anonymous',
-//                $methodName,
-//                "'exception' => \${$throwable}"
-//            )];
         }
 
         return [];
