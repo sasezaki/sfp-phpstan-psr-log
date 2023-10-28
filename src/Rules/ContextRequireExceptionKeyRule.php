@@ -190,12 +190,10 @@ final class ContextRequireExceptionKeyRule implements Rule
             return $exceptionOffset->no();
         }
 
-        echo $context->value->getLine() . json_encode([$exceptionOffset->yes(), $exceptionOffset->maybe(), $exceptionOffset->no()]);
-
-        if ($exceptionOffset->yes()) {
+        if ($exceptionOffset->maybe()) {
             return false;
         }
 
-        return $exceptionOffset->maybe() || $exceptionOffset->no();
+        return $exceptionOffset->no();
     }
 }
