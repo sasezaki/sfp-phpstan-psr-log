@@ -14,16 +14,26 @@ use Sfp\PHPStan\Psr\Log\Rules\ContextRequireExceptionKeyRule;
  */
 final class ContextRequireExceptionKeyRuleTest extends RuleTestCase
 {
+    /** @var bool */
+    private $treatPhpDocTypesAsCertain = false;
+
+    /** @var bool */
+    private $reportMaybes = false;
+
     /** @phpstan-var 'debug'|'info' */
     private $reportContextExceptionLogLevel = 'debug';
 
     protected function getRule(): Rule
     {
-        return new ContextRequireExceptionKeyRule($this->reportContextExceptionLogLevel);
+        return new ContextRequireExceptionKeyRule(
+            $this->treatPhpDocTypesAsCertain,
+            $this->reportMaybes,
+            $this->reportContextExceptionLogLevel
+        );
     }
 
     /** @test */
-    public function shouldNotBeReportsIfLogLevelIsUnder(): void
+    public function shouldNotBeReportedIfLogLevelIsNotReached(): void
     {
         $this->reportContextExceptionLogLevel = 'info';
 
@@ -33,6 +43,43 @@ final class ContextRequireExceptionKeyRuleTest extends RuleTestCase
                 13,
             ],
         ]);
+    }
+
+    /**
+     * @dataProvider provideParameters
+     */
+    public function testProcessNode0(bool $treatPhpDocTypesAsCertain, bool $reportMaybes): void
+    {
+        $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
+        $this->reportMaybes = $reportMaybes;
+        $this->reportContextExceptionLogLevel = 'debug';
+//        $this->analyse([__DIR__ . '/data/contextRequireExceptionKey0.php'], [
+//        ]);
+
+        $actualErrors = $this->gatherAnalyserErrors([__DIR__ . '/data/contextRequireExceptionKey0.php']);
+        var_dump($actualErrors);
+    }
+
+    public static function provideParameters(): array
+    {
+        return [
+            [
+                'treatPhpDocTypesAsCertain' => false,
+                'reportMaybes' => false,
+            ],
+            [
+                'treatPhpDocTypesAsCertain' => false,
+                'reportMaybes' => true,
+            ],
+            [
+                'treatPhpDocTypesAsCertain' => true,
+                'reportMaybes' => false,
+            ],
+            [
+                'treatPhpDocTypesAsCertain' => true,
+                'reportMaybes' => true,
+            ],
+        ];
     }
 
     /**

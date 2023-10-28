@@ -9,7 +9,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\ShouldNotHappenException;
-use PHPStan\Type\ArrayType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
 use Throwable;
@@ -37,11 +36,22 @@ final class ContextRequireExceptionKeyRule implements Rule
 
     private const ERROR_MISSED_EXCEPTION_KEY = 'Parameter $context of logger method Psr\Log\LoggerInterface::%s() requires \'exception\' key. Current scope has Throwable variable - %s';
 
+    /** @var bool */
+    private $treatPhpDocTypesAsCertain;
+
+    /** @var bool */
+    private $reportMaybes;
+
     /** @var string */
     private $reportContextExceptionLogLevel;
 
-    public function __construct(string $reportContextExceptionLogLevel = 'debug')
-    {
+    public function __construct(
+        bool $treatPhpDocTypesAsCertain,
+        bool $reportMaybes,
+        string $reportContextExceptionLogLevel = 'debug'
+    ) {
+        $this->treatPhpDocTypesAsCertain      = $treatPhpDocTypesAsCertain;
+        $this->reportMaybes                   = $reportMaybes;
         $this->reportContextExceptionLogLevel = $reportContextExceptionLogLevel;
     }
 
@@ -116,7 +126,7 @@ final class ContextRequireExceptionKeyRule implements Rule
         /** @psalm-suppress RedundantConditionGivenDocblockType */
         assert($context instanceof Node\Arg);
 
-        if (self::contextDoesNotHaveExceptionKey($context, $scope)) {
+        if (! $this->contextHasExceptionKey($context, $scope)) {
             if (! $this->hasReportLogLevel($logLevels)) {
                 return [];
             }
@@ -161,16 +171,17 @@ final class ContextRequireExceptionKeyRule implements Rule
         return null;
     }
 
-    private static function contextDoesNotHaveExceptionKey(Node\Arg $context, Scope $scope): bool
+    private function contextHasExceptionKey(Node\Arg $context, Scope $scope): bool
     {
-        $type = $scope->getType($context->value);
-        if ($type instanceof ArrayType) {
-            if ($type->hasOffsetValueType(new ConstantStringType('exception'))->yes()) {
-                return false;
-            }
-            return true;
+        if ($this->treatPhpDocTypesAsCertain) {
+            $type = $scope->getType($context->value);
+        } else {
+            $type = $scope->getNativeType($context->value);
         }
 
-        return false;
+        $hasExceptionKey = $type->hasOffsetValueType(new ConstantStringType('exception'));
+
+
+        return $hasExceptionKey->yes() || $hasExceptionKey->maybe() && $this->reportMaybes;
     }
 }
