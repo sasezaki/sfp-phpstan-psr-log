@@ -108,7 +108,11 @@ final class ContextRequireExceptionKeyRule implements Rule
                 return [];
             }
 
-            return [sprintf(self::ERROR_MISSED_EXCEPTION_KEY, $methodName, "\${$throwable}")];
+            return [
+                RuleErrorBuilder::message(
+                    sprintf(self::ERROR_MISSED_EXCEPTION_KEY, $methodName, "\${$throwable}")
+                )->identifier('sfpPsrLog.contextRequireExceptionKey')->build(),
+            ];
         }
 
         $context = $args[$contextArgumentNo];
@@ -121,7 +125,7 @@ final class ContextRequireExceptionKeyRule implements Rule
             return [
                 RuleErrorBuilder::message(
                     sprintf(self::ERROR_MISSED_EXCEPTION_KEY, $methodName, "\${$throwable}")
-                )->identifier('sfp-psr-log.contextRequireExceptionKey')->build(),
+                )->identifier('sfpPsrLog.contextRequireExceptionKey')->build(),
             ];
         }
 
