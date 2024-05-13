@@ -6,6 +6,7 @@ namespace Sfp\PHPStan\Psr\Log\Rules;
 
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -91,7 +92,7 @@ final class PlaceholderCorrespondToKeysRule implements Rule
             if (! isset($args[$contextArgumentNo])) {
                 $errors[] = RuleErrorBuilder::message(
                     sprintf(self::ERROR_MISSED_CONTEXT, $methodName, implode(',', $matches[0]))
-                )->identifier('sfp-psr-log.placeholderCorrespondToKeysMissedContext')->build();
+                )->identifier('sfpPsrLog.placeholderCorrespondToKeysMissedContext')->build();
 
                 continue;
             }
@@ -111,12 +112,12 @@ final class PlaceholderCorrespondToKeysRule implements Rule
      * @phpstan-param list<string> $braces
      * @phpstan-param list<string> $placeholders
      */
-    private static function contextDoesNotHavePlaceholderKey(Type $arrayType, string $methodName, array $braces, array $placeholders): ?RuleError
+    private static function contextDoesNotHavePlaceholderKey(Type $arrayType, string $methodName, array $braces, array $placeholders): ?IdentifierRuleError
     {
         if ($arrayType->isIterableAtLeastOnce()->no()) {
             return RuleErrorBuilder::message(
                 self::ERROR_EMPTY_CONTEXT
-            )->identifier('sfp-psr-log.placeholderCorrespondToKeysMissedKey')->build();
+            )->identifier('sfpPsrLog.placeholderCorrespondToKeysMissedKey')->build();
         }
 
         $constantArrays = $arrayType->getConstantArrays();
@@ -146,7 +147,7 @@ final class PlaceholderCorrespondToKeysRule implements Rule
 
             return RuleErrorBuilder::message(
                 sprintf(self::ERROR_MISSED_KEY, $methodName, implode(',', $checkBraces))
-            )->identifier('sfp-psr-log.placeholderCorrespondToKeysMissedKey')->build();
+            )->identifier('sfpPsrLog.placeholderCorrespondToKeysMissedKey')->build();
         }
 
         return null;

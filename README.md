@@ -46,7 +46,7 @@ This package provides the following rules.
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.placeholderCharactersInvalidChar |
+| sfpPsrLog.placeholderCharactersInvalidChar |
 
 * reports when placeholder in `$message` characters are **not**, `A-Z`, `a-z`, `0-9`, underscore `_`, and period `.`
 
@@ -57,7 +57,7 @@ $logger->info('message are {foo-hyphen}');
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.placeholderCharactersDoubleBraces |
+| sfpPsrLog.placeholderCharactersDoubleBraces |
 
 * reports when double braces pair `{{` `}}` are used.
 
@@ -72,7 +72,7 @@ $logger->info('message are {{foo}}');
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.placeholderCorrespondToKeysMissedContext |
+| sfpPsrLog.placeholderCorrespondToKeysMissedContext |
 
 * reports when placeholder exists in message, but `$context` parameter is missed.
 
@@ -83,7 +83,7 @@ $logger->info('message has {nonContext} .');
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.placeholderCorrespondToKeysMissedKey |
+| sfpPsrLog.placeholderCorrespondToKeysMissedKey |
 
 * reports when placeholder exists in message, but key in `$context` does not exist against them.
 
@@ -99,7 +99,7 @@ $logger->info('user {user_id} gets an error {error} .', ['user_id' => $user_id])
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.contextKeyNonEmptyString |
+| sfpPsrLog.contextKeyNonEmptyString |
 
 * reports when context key is not **non-empty-string**.
 
@@ -110,7 +110,7 @@ $logger->info('user {user_id} gets an error {error} .', ['user_id' => $user_id])
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.contextKeyOriginalPattern |
+| sfpPsrLog.contextKeyOriginalPattern |
 
 * reports when context key is not matched you defined pattern.
   * if `contextKeyOriginalPattern` parameter is not set, this check would be ignored.
@@ -132,7 +132,7 @@ parameters:
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.contextRequireExceptionKey |
+| sfpPsrLog.contextRequireExceptionKey |
 
 * It forces `exception` key into context parameter when current scope has `\Throwable` object.
 
@@ -194,7 +194,7 @@ parameters:
 
 | :pushpin: _error identifier_ |
 | --- |
-| sfp-psr-log.messageNotStaticString |
+| sfpPsrLog.messageNotStaticString |
 
 * reports when $message is not static string value.
 

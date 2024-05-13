@@ -110,7 +110,7 @@ final class ContextKeyRule implements Rule
      * phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
      * @phpstan-param list<\PHPStan\Type\Constant\ConstantArrayType> $constantArrays
      * phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
-     * @phpstan-return list<\PHPStan\Rules\RuleError>
+     * @phpstan-return list<\PHPStan\Rules\IdentifierRuleError>
      */
     private static function keysAreNonEmptyString(array $constantArrays, string $methodName): array
     {
@@ -123,7 +123,7 @@ final class ContextKeyRule implements Rule
 
                 $errors[] = RuleErrorBuilder::message(
                     sprintf(self::ERROR_NOT_NON_EMPTY_STRING, $methodName)
-                )->identifier('sfp-psr-log.contextKeyNonEmptyString')->build();
+                )->identifier('sfpPsrLog.contextKeyNonEmptyString')->build();
             }
         }
 
@@ -134,7 +134,7 @@ final class ContextKeyRule implements Rule
      * phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
      * @phpstan-param list<\PHPStan\Type\Constant\ConstantArrayType> $constantArrays
      * phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
-     * @phpstan-return list<\PHPStan\Rules\RuleError>
+     * @phpstan-return list<\PHPStan\Rules\IdentifierRuleError>
      */
     private function originalPatternMatches(array $constantArrays, string $methodName): array
     {
@@ -166,7 +166,7 @@ final class ContextKeyRule implements Rule
                 if ($matched === 0) {
                     $errors[] = RuleErrorBuilder::message(
                         sprintf(self::ERROR_NOT_MATCH_ORIGINAL_PATTERN, $methodName, $this->contextKeyOriginalPattern)
-                    )->identifier('sfp-psr-log.contextKeyOriginalPattern')->build();
+                    )->identifier('sfpPsrLog.contextKeyOriginalPattern')->build();
                 }
             }
         }
