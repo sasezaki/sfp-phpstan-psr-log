@@ -11,6 +11,7 @@
       "name": "psalm",
       "job": {
         "php": "@latest",
+        "ignore_php_platform_requirement": true,
         "command": "./vendor/bin/psalm --shepherd --stats --output-format=github --no-cache -c psalm5.xml"
       }
     },
