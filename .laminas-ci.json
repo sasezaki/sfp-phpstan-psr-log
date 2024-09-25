@@ -21,5 +21,8 @@
         "command": "diff <(./vendor/bin/phpstan analyse -c ./example/phpstan.neon --no-progress --error-format=junit | xmllint --format -) ./test/example.output"
       }
     }
-  ]
+  ],
+  "ignore_php_platform_requirements": {
+    "8.4": true
+  }
 }
