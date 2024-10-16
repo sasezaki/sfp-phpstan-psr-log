@@ -10,7 +10,7 @@
     {
       "name": "phpstan2",
       "job": {
-        "php": "@latest",
+        "php": "8.3",
         "command": "composer config minimum-stability dev && composer config prefer-stable true && composer u && ./vendor/bin/phpstan analyse --no-progress"
       }
     },
