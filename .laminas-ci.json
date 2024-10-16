@@ -8,6 +8,13 @@
       }
     },
     {
+      "name": "phpstan2",
+      "job": {
+        "php": "@latest",
+        "command": "composer config minimum-stability dev && composer config prefer-stable true && ./vendor/bin/phpstan analyse --no-progress"
+      }
+    },
+    {
       "name": "psalm",
       "job": {
         "php": "@latest",
