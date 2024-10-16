@@ -11,7 +11,7 @@
       "name": "phpstan2",
       "job": {
         "php": "@latest",
-        "command": "composer config minimum-stability dev && composer config prefer-stable true && ./vendor/bin/phpstan analyse --no-progress"
+        "command": "composer config minimum-stability dev && composer config prefer-stable true && composer u && ./vendor/bin/phpstan analyse --no-progress"
       }
     },
     {
