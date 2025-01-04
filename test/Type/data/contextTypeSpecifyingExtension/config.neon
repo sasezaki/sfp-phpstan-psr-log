@@ -1,0 +1,28 @@
+parametersSchema:
+	sfpPsrLog: structure([
+		analyser: structure([
+			bigQuery: structure([
+				schemaFile: schema(string(), nullable())
+			])
+		])
+	])
+
+parameters:
+	sfpPsrLog:
+		analyser:
+			bigQuery:
+				schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
+
+services:
+	tableFieldSchemaJsonPayloadTypeConverter:
+		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+
+	-
+		class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
+		tags:
+			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
+
+	-
+		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\ContextTypeFromTableFieldSchemaJsonFileProvider
+		arguments:
+			schemaFile: %sfpPsrLog.analyser.bigQuery.schemaFile%

@@ -1,0 +1,36 @@
+[
+    {
+        "mode": "NULLABLE",
+        "name": "logName",
+        "type": "STRING"
+    },
+    {
+        "fields" : [
+            {
+                "name": "first_name",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "product",
+                "type": "RECORD",
+                "mode": "NULLABLE",
+                "fields": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "mode": "NULLABLE"
+                    }
+                ]
+            },
+            {
+                "name": "cancellation_reason",
+                "type": "FLOAT",
+                "mode": "NULLABLE"
+            }
+        ],
+        "mode": "NULLABLE",
+        "name": "jsonPayload",
+        "type": "RECORD"
+    }
+]
