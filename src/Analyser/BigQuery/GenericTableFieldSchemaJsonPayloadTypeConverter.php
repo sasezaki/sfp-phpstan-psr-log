@@ -19,18 +19,6 @@ use Thowable;
 use function in_array;
 
 /**
- * > The name and type fields are required. All other fields are optional.
- * https://cloud.google.com/bigquery/docs/schemas?hl=en#creating_a_JSON_schema_file
- *
- * - type
- *   https://cloud.google.com/bigquery/docs/reference/rest/v2/tables?hl=en#TableFieldSchema
- *   >  The field data type. Possible values include:
- *   STRING, BYTES, INTEGER (or INT64), FLOAT (or FLOAT64), ...., NUMERIC, BIGNUMERIC, JSON, RECORD (or STRUCT), RANGE
- *
- * - mode
- *   > Optional. The field mode. Possible values include NULLABLE, REQUIRED and REPEATED.
- *     The default value is NULLABLE.
- *
  * @phpstan-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
  */
 final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFieldSchemaJsonPayloadTypeConverterInterface
@@ -58,14 +46,9 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
      */
     public static function convertFieldsToTypes(array $jsonPayloadFields): Type
     {
-        // private array $keyTypes,
-        // private array $valueTypes,
-        // int|array $nextAutoIndexes = [0],
-        // private array $optionalKeys = [],
-
         $keyTypes        = [];
         $valueTypes      = [];
-        $nextAutoIndexes = [0];
+        $nextAutoIndexes = [0]; // ((index is intended non-numeric-string, so int never used.)) // todo unexpected numeric-string is used
         $optionalKeys    = [];
 
         $idx = 0;
@@ -76,6 +59,13 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
                 if ($item['mode'] === 'REPEATED') {
                     // todo...
                 }
+
+                // @todo reverse (todo) json_encode array
+                // eg. 
+                // json_encode(["pub_date" => new \DateTime])
+                // would be like {"pub_date":{"date":"2025-01-04 10:00:00.396494","timezone_type":3,"timezone":"UTC"}}.
+                // , if RECORD has 'date', 'timezone_type' & 'timezone' field, it would be `{pub_date: \DateTimeInterface}`
+
                 $valueTypes[] = self::convertFieldsToTypes($item['fields']);
             } else {
                 $valueTypes[] = self::convertTypeToPhpScalarType($item['type']);
@@ -85,10 +75,6 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
         }
 
         return new ConstantArrayType($keyTypes, $valueTypes, $nextAutoIndexes, $optionalKeys);
-    }
-
-    public function convertItem(array $item)
-    {
     }
 
     /**
