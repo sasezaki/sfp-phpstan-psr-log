@@ -33,7 +33,7 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
     public function isMethodSupported(
         MethodReflection $methodReflection,
         MethodCall $node,
-        TypeSpecifierContext $context,
+        TypeSpecifierContext $context
     ): bool {
         return in_array($methodReflection->getName(), [
             'log',
@@ -56,7 +56,6 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
         }
 
         $contextType = $this->contextTypeProvider->getType();
-        // $contextType = new StringType();
 
         return new SpecifiedTypes(['$context' => [$node->getArgs()[$contextArgIndex]->value, $contextType]]);
     }

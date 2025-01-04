@@ -61,7 +61,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
                 }
 
                 // @todo reverse (todo) json_encode array
-                // eg. 
+                // eg.
                 // json_encode(["pub_date" => new \DateTime])
                 // would be like {"pub_date":{"date":"2025-01-04 10:00:00.396494","timezone_type":3,"timezone":"UTC"}}.
                 // , if RECORD has 'date', 'timezone_type' & 'timezone' field, it would be `{pub_date: \DateTimeInterface}`
