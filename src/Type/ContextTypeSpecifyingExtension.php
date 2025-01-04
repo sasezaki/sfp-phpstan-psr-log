@@ -10,9 +10,9 @@ use PHPStan\Analyser\SpecifiedTypes;
 use PHPStan\Analyser\TypeSpecifierContext;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\MethodTypeSpecifyingExtension;
-use PHPStan\Type\StringType;
-
 use Sfp\PHPStan\Psr\Log\Analyser\ContextTypeProviderInterface;
+
+use function in_array;
 
 final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtension
 {
@@ -21,8 +21,7 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
 
     public function __construct(
         ContextTypeProviderInterface $contextTypeProvider
-    )
-    {
+    ) {
         $this->contextTypeProvider = $contextTypeProvider;
     }
 
@@ -31,18 +30,23 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
         return 'Psr\Log\LoggerInterface';
     }
 
-	public function isMethodSupported(
-		MethodReflection $methodReflection,
-		MethodCall $node,
-		TypeSpecifierContext $context,
-	): bool
-	{
-		return in_array($methodReflection->getName(), [
-		    'log',
-            'emergency', 'alert', 'critical', 'error', 'warning',
-            'notice', 'info', 'debug',
-		], true);
-	}
+    public function isMethodSupported(
+        MethodReflection $methodReflection,
+        MethodCall $node,
+        TypeSpecifierContext $context,
+    ): bool {
+        return in_array($methodReflection->getName(), [
+            'log',
+            'emergency',
+            'alert',
+            'critical',
+            'error',
+            'warning',
+            'notice',
+            'info',
+            'debug',
+        ], true);
+    }
 
     public function specifyTypes(MethodReflection $methodReflection, MethodCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {

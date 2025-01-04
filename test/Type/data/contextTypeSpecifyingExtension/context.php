@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace SfpTest\PHPStan\Psr\Log\Type;
 
+use Psr\Log\LoggerInterface;
+
+use function PHPStan\Testing\assertType;
+
 /**
- * @var \Psr\Log\LoggerInterface $logger;
+ * @var LoggerInterface $logger
  */
 
 $logger->error('err', $arr);
 
-\PHPStan\Testing\assertType('array{exception?: Exception}', $arr);
-\PHPStan\Testing\assertType('array{exception2?: Exception}', $arr);
+assertType('array{exception?: Exception}', $arr);

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Sfp\PHPStan\Psr\Log\Analyser\BigQuery;
 
+use Exception;
+use PHPStan\Type\Type;
 use Sfp\PHPStan\Psr\Log\Analyser\ContextTypeProviderInterface;
 
-// use PHPStan\PhpDocParser\Ast\Type\ArrayShapeNode;
-use PHPStan\Type\ArrayType;
-use PHPStan\Type\Constant\ConstantArrayType;
-use PHPStan\Type\Type;
+use function file_get_contents;
+use function json_decode;
 
 final class ContextTypeFromTableFieldSchemaJsonFileProvider implements ContextTypeProviderInterface
 {
@@ -20,38 +20,37 @@ final class ContextTypeFromTableFieldSchemaJsonFileProvider implements ContextTy
     private $tableFieldSchemaJsonPayloadTypeConverter;
 
     /** @var ?array */
-    private $jsonPayloadFields = null;
+    private $jsonPayloadFields;
 
     public function __construct(
         string $schemaFile,
         TableFieldSchemaJsonPayloadTypeConverterInterface $tableFieldSchemaJsonPayloadTypeConverter
-    )
-    {
-        $this->schemaFile = $schemaFile;
+    ) {
+        $this->schemaFile                               = $schemaFile;
         $this->tableFieldSchemaJsonPayloadTypeConverter = $tableFieldSchemaJsonPayloadTypeConverter;
     }
 
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->tableFieldSchemaJsonPayloadTypeConverter->toArrayType($this->getJsonPayloadFields());
     }
 
-    private function getJsonPayloadFields() : array
+    private function getJsonPayloadFields(): array
     {
-        if (!isset($this->jsonPayloadFields)) {
+        if (! isset($this->jsonPayloadFields)) {
             $schemaJson = file_get_contents($this->schemaFile);
-            $schema = json_decode($schemaJson, true);
+            $schema     = json_decode($schemaJson, true);
 
             $jsonPayloadFields = null;
-            foreach($schema as $item) {
+            foreach ($schema as $item) {
                 if ($item['name'] !== 'jsonPayload') {
                     continue;
                 }
                 $jsonPayloadFields = $item['fields'];
             }
 
-            if (!$jsonPayloadFields) {
-                throw new \Exception('schemaFile must have jsonPayload field');
+            if (! $jsonPayloadFields) {
+                throw new Exception('schemaFile must have jsonPayload field');
             }
 
             $this->jsonPayloadFields = $jsonPayloadFields;

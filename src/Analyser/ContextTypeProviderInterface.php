@@ -8,5 +8,5 @@ use PHPStan\Type\Type;
 
 interface ContextTypeProviderInterface
 {
-    public function getType() : Type;
+    public function getType(): Type;
 }
