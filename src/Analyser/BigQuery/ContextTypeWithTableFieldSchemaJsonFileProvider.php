@@ -11,6 +11,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use RuntimeException;
 use Sfp\PHPStan\Psr\Log\Analyser\ContextTypeProviderInterface;
+use UnexpectedValueException;
 
 use function file_get_contents;
 use function is_array;
@@ -80,6 +81,11 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
                 if (! isset($item['name']) || $item['name'] !== 'jsonPayload') {
                     continue;
                 }
+
+                if (! isset($item['fields']) || !is_array($item['fields'])) {
+                    throw new UnexpectedValueException('fields is not array');
+                }
+
                 $jsonPayloadFields = $item['fields'];
             }
 

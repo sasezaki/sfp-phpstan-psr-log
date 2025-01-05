@@ -31,8 +31,13 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
         $this->contextTypeProvider = $contextTypeProvider ?? new Psr3ContextTypeProvider();
     }
 
+    /**
+     * @psalm-suppress LessSpecificImplementedReturnType
+     * @return 'Psr\Log\LoggerInterface'
+     */
     public function getClass(): string
     {
+        /** @psalm-suppress UndefinedClass */
         return 'Psr\Log\LoggerInterface';
     }
 
