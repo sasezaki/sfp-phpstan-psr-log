@@ -16,14 +16,14 @@ use PHPStan\Type\TypeCombinator;
 use function in_array;
 
 /**
- * @phpstan-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
+ * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
  */
 final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFieldSchemaJsonPayloadTypeConverterInterface
 {
     /**
      * @param list<schema_item> $jsonPayloadFields
      */
-    public function toArrayType(array $jsonPayloadFields): Type
+    public function toArrayType(array $jsonPayloadFields): ConstantArrayType
     {
         return self::convertFieldsToTypes($jsonPayloadFields);
     }
@@ -31,7 +31,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
     /**
      * @param list<schema_item> $jsonPayloadFields
      */
-    public static function convertFieldsToTypes(array $jsonPayloadFields): Type
+    public static function convertFieldsToTypes(array $jsonPayloadFields): ConstantArrayType
     {
         $keyTypes        = [];
         $valueTypes      = [];
@@ -43,6 +43,10 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
             $keyTypes[] = new ConstantStringType($item['name']);
 
             if ($item['type'] === 'RECORD' || $item['type'] === 'STRUCT') {
+                if (!isset($item['mode'], $item['fields'])) {
+                    throw new \UnexpectedValueException('Offset mode or fields not exist');
+                }
+
                 if ($item['mode'] === 'REPEATED') {
                     // todo...
                 }
@@ -71,7 +75,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
      */
     public static function convertTypeToPhpScalarType(string $type, bool $floatNonStrict = true): Type
     {
-        if (in_array($type, ['INTEGER', 'INT64'])) {
+        if (in_array($type, ['INTEGER', 'INT64'], true)) {
             return new IntegerType();
         }
 

@@ -14,6 +14,9 @@ use Sfp\PHPStan\Psr\Log\Analyser\ContextTypeProviderInterface;
 use function file_get_contents;
 use function json_decode;
 
+/**
+ * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
+ */
 final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTypeProviderInterface
 {
     /** @var string */
@@ -22,7 +25,7 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
     /** @var TableFieldSchemaJsonPayloadTypeConverterInterface */
     private $tableFieldSchemaJsonPayloadTypeConverter;
 
-    /** @var ?array */
+    /** @var ?list<schema_item>*/
     private $jsonPayloadFields;
 
     public function __construct(
@@ -48,10 +51,17 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
         return $builder->getArray();
     }
 
+    /**
+     * @return list<schema_item>
+     */
     private function getJsonPayloadFields(): array
     {
         if (! isset($this->jsonPayloadFields)) {
             $schemaJson = file_get_contents($this->schemaFile);
+            if ($schemaJson === false) {
+                throw new \RuntimeException(sprintf('File %s cant open', $this->schemaFile));
+            }
+
             $schema     = json_decode($schemaJson, true);
 
             $jsonPayloadFields = null;
@@ -62,13 +72,19 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
                 $jsonPayloadFields = $item['fields'];
             }
 
-            if (! $jsonPayloadFields) {
+            if ($jsonPayloadFields === null) {
                 throw new Exception('schemaFile must have jsonPayload field');
             }
+            /** @var list<schema_item> $jsonPayloadFields  */
 
             $this->jsonPayloadFields = $jsonPayloadFields;
         }
 
         return $this->jsonPayloadFields;
     }
+
+    // private static function assertSchemaItem(array )
+    // {
+
+    // }
 }

@@ -17,7 +17,7 @@ final class Psr3ContextTypeProvider implements ContextTypeProviderInterface
             [new ConstantStringType('exception')],
             [new ObjectType('\Throwable')],
             [0],
-            [true]
+            [0]
         );
     }
 }
