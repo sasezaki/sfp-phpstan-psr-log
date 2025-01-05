@@ -13,4 +13,4 @@ use function PHPStan\Testing\assertType;
  */
 
 $logger->error('err', $context);
-assertType('array{first_name?: string, product?: array{id?: string}, cancellation_reason?: float|int|numeric-string, exception?: \Thowable}', $context);
+assertType('array{first_name?: string, product?: array{id?: string}, cancellation_reason?: float|int|numeric-string, exception?: \Throwable}', $context);
