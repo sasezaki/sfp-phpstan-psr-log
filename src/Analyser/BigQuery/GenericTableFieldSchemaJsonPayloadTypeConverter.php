@@ -12,6 +12,7 @@ use PHPStan\Type\IntegerType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
+use UnexpectedValueException;
 
 use function in_array;
 
@@ -43,13 +44,13 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
             $keyTypes[] = new ConstantStringType($item['name']);
 
             if ($item['type'] === 'RECORD' || $item['type'] === 'STRUCT') {
-                if (!isset($item['mode'], $item['fields'])) {
-                    throw new \UnexpectedValueException('Offset mode or fields not exist');
+                if (! isset($item['mode'], $item['fields'])) {
+                    throw new UnexpectedValueException('Offset mode or fields not exist');
                 }
 
-                if ($item['mode'] === 'REPEATED') {
+                // if ($item['mode'] === 'REPEATED') {
                     // todo...
-                }
+                // }
 
                 // @todo reverse (todo) json_encode array
                 // eg.

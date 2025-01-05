@@ -9,10 +9,13 @@ use PHPStan\Type\Constant\ConstantArrayTypeBuilder;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use RuntimeException;
 use Sfp\PHPStan\Psr\Log\Analyser\ContextTypeProviderInterface;
 
 use function file_get_contents;
+use function is_array;
 use function json_decode;
+use function sprintf;
 
 /**
  * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
@@ -59,14 +62,22 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
         if (! isset($this->jsonPayloadFields)) {
             $schemaJson = file_get_contents($this->schemaFile);
             if ($schemaJson === false) {
-                throw new \RuntimeException(sprintf('File %s cant open', $this->schemaFile));
+                throw new RuntimeException(sprintf('File %s cant open', $this->schemaFile));
             }
 
-            $schema     = json_decode($schemaJson, true);
+            $schema = json_decode($schemaJson, true);
+
+            if (! is_array($schema)) {
+                throw new RuntimeException('schema is not array');
+            }
 
             $jsonPayloadFields = null;
             foreach ($schema as $item) {
-                if ($item['name'] !== 'jsonPayload') {
+                if (! is_array($item)) {
+                    throw new RuntimeException('item is not array');
+                }
+
+                if (! isset($item['name']) || $item['name'] !== 'jsonPayload') {
                     continue;
                 }
                 $jsonPayloadFields = $item['fields'];
@@ -75,8 +86,7 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
             if ($jsonPayloadFields === null) {
                 throw new Exception('schemaFile must have jsonPayload field');
             }
-            /** @var list<schema_item> $jsonPayloadFields  */
-
+            /** @var list<schema_item> $jsonPayloadFields */
             $this->jsonPayloadFields = $jsonPayloadFields;
         }
 
