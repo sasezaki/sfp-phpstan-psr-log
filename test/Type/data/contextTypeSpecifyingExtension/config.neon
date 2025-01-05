@@ -1,28 +1,33 @@
-parametersSchema:
-	sfpPsrLog: structure([
-		analyser: structure([
-			bigQuery: structure([
-				schemaFile: schema(string(), nullable())
-			])
-		])
-	])
+
+includes:
+	- ../../../../parametersSchema.neon
 
 parameters:
 	sfpPsrLog:
+		enableContextRequireExceptionKeyRule: false
+		enableMessageStaticStringRule: true
+		reportContextExceptionLogLevel: 'debug'
+		contextKeyOriginalPattern: null
 		analyser:
 			bigQuery:
 				schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
+		type:
+			contextTypeSpecifyingExtension:
+				enabled: true
 
 services:
-	tableFieldSchemaJsonPayloadTypeConverter:
-		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
-
 	-
 		class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
+		arguments:
+			enabled: %sfpPsrLog.type.contextTypeSpecifyingExtension.enabled%
 		tags:
 			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
 
+	# BigQuery
 	-
-		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\ContextTypeFromTableFieldSchemaJsonFileProvider
+		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+
+	-
+		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\ContextTypeWithTableFieldSchemaJsonFileProvider
 		arguments:
 			schemaFile: %sfpPsrLog.analyser.bigQuery.schemaFile%

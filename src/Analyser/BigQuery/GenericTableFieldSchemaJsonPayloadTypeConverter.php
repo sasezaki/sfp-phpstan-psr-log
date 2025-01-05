@@ -6,15 +6,12 @@ namespace Sfp\PHPStan\Psr\Log\Analyser\BigQuery;
 
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Constant\ConstantArrayType;
-use PHPStan\Type\Constant\ConstantArrayTypeBuilder;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\FloatType;
 use PHPStan\Type\IntegerType;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
-use Thowable;
 
 use function in_array;
 
@@ -28,17 +25,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
      */
     public function toArrayType(array $jsonPayloadFields): Type
     {
-        $builder = ConstantArrayTypeBuilder::createFromConstantArray(
-            self::convertFieldsToTypes($jsonPayloadFields)
-        );
-
-        $builder->setOffsetValueType(
-            new ConstantStringType('exception'),
-            new ObjectType(Thowable::class),
-            true
-        );
-
-        return $builder->getArray();
+        return self::convertFieldsToTypes($jsonPayloadFields);
     }
 
     /**
