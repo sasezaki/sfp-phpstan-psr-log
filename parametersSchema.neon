@@ -1,0 +1,17 @@
+parametersSchema:
+	sfpPsrLog: structure([
+		enableContextRequireExceptionKeyRule: bool(),
+		enableMessageStaticStringRule: bool(),
+		reportContextExceptionLogLevel: schema(string(), nullable()),
+		contextKeyOriginalPattern: schema(string(), nullable()),
+		analyser: structure([
+			bigQuery: structure([
+				schemaFile: schema(string(), nullable())
+			])
+		]),
+		type: structure([
+			contextTypeSpecifyingExtension: structure([
+				enabled: bool()
+			])
+		])
+	])
