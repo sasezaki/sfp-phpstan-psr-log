@@ -82,7 +82,7 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
                     continue;
                 }
 
-                if (! isset($item['fields']) || !is_array($item['fields'])) {
+                if (! isset($item['fields']) || ! is_array($item['fields'])) {
                     throw new UnexpectedValueException('fields is not array');
                 }
 
@@ -98,9 +98,4 @@ final class ContextTypeWithTableFieldSchemaJsonFileProvider implements ContextTy
 
         return $this->jsonPayloadFields;
     }
-
-    // private static function assertSchemaItem(array )
-    // {
-
-    // }
 }
