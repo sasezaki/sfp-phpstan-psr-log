@@ -10,8 +10,8 @@ use PHPStan\Analyser\SpecifiedTypes;
 use PHPStan\Analyser\TypeSpecifierContext;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\MethodTypeSpecifyingExtension;
-use Sfp\PHPStan\Psr\Log\Analyser\ContextTypeProviderInterface;
-use Sfp\PHPStan\Psr\Log\Analyser\Psr3ContextTypeProvider;
+use Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface;
+use Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider;
 
 use function in_array;
 

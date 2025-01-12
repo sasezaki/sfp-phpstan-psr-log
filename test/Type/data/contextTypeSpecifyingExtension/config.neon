@@ -8,12 +8,12 @@ parameters:
 		enableMessageStaticStringRule: true
 		reportContextExceptionLogLevel: 'debug'
 		contextKeyOriginalPattern: null
-		analyser:
-			bigQuery:
-				schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
 		type:
 			contextTypeSpecifyingExtension:
 				enabled: true
+		typeProvider:
+			bigQueryContextType:
+				schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
 
 services:
 	-
@@ -25,9 +25,9 @@ services:
 
 	# BigQuery
 	-
-		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+		class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
 
 	-
-		class: Sfp\PHPStan\Psr\Log\Analyser\BigQuery\ContextTypeWithTableFieldSchemaJsonFileProvider
+		class: Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider
 		arguments:
-			schemaFile: %sfpPsrLog.analyser.bigQuery.schemaFile%
+			schemaFile: %sfpPsrLog.typeProvider.bigQueryContextType.schemaFile%
