@@ -41,7 +41,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
     {
         $keyTypes        = [];
         $valueTypes      = [];
-        $nextAutoIndexes = [0]; // ((index is intended non-numeric-string, so int never used.)) // todo unexpected numeric-string is used
+        $nextAutoIndexes = [0];
         $optionalKeys    = [];
 
         $idx = 0;
@@ -69,6 +69,10 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
             }
 
             $keyTypes[]     = new ConstantStringType($item['name']);
+            if (is_numeric($item['name'])) {
+                $nextAutoIndexes[] = (int) $item['name'] + 1;
+            }
+
             $optionalKeys[] = $idx;
             ++$idx;
         }
@@ -98,7 +102,6 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
     }
 
     /**
-     * @todo implement
      * @phpstan-param non_record_field_type $type
      *
      * https://cloud.google.com/bigquery/docs/reference/rest/v2/tables?hl=en#TableFieldSchema
