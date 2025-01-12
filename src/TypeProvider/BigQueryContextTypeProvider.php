@@ -19,6 +19,7 @@ use function json_decode;
 use function sprintf;
 
 /**
+ * @experimental
  * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
  */
 final class BigQueryContextTypeProvider implements ContextTypeProviderInterface

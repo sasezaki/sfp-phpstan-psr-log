@@ -15,7 +15,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverterTest extends TestCase
     /**
      * @see https://github.com/phpstan/phpstan-src/blob/2.1.1/tests/PHPStan/Type/Constant/ConstantArrayTypeBuilderTest.php
      */
-    public function testConvertFieldsToTypes() : void
+    public function testConvertFieldsToTypes(): void
     {
         $type = GenericTableFieldSchemaJsonPayloadTypeConverter::convertFieldsToTypes([
             ['name' => '', 'type' => 'STRING'],
