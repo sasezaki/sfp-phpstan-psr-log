@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter;
 
 /**
- * @covers \SfpTest\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+ * @covers \Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
  */
 final class GenericTableFieldSchemaJsonPayloadTypeConverterTest extends TestCase
 {
@@ -22,6 +22,6 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverterTest extends TestCase
             ['name' => '0', 'type' => 'STRING'],
         ]);
 
-        $this->assertSame([0, 1], $type->getNextAutoIndexes());
+        self::assertSame([0, 1], $type->getNextAutoIndexes());
     }
 }
