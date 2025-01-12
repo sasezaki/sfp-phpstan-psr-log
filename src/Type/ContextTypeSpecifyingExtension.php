@@ -33,7 +33,7 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
 
     /**
      * @psalm-suppress LessSpecificImplementedReturnType
-     * @return 'Psr\Log\LoggerInterface'
+     * @phpstan-return 'Psr\Log\LoggerInterface'
      */
     public function getClass(): string
     {

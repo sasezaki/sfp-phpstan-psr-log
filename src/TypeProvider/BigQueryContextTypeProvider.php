@@ -30,7 +30,7 @@ final class BigQueryContextTypeProvider implements ContextTypeProviderInterface
     /** @var TableFieldSchemaJsonPayloadTypeConverterInterface */
     private $tableFieldSchemaJsonPayloadTypeConverter;
 
-    /** @var ?list<schema_item>*/
+    /** @phpstan-var ?list<schema_item> */
     private $jsonPayloadFields;
 
     public function __construct(
@@ -57,7 +57,7 @@ final class BigQueryContextTypeProvider implements ContextTypeProviderInterface
     }
 
     /**
-     * @return list<schema_item>
+     * @phpstan-return list<schema_item>
      */
     private function getJsonPayloadFields(): array
     {
@@ -97,7 +97,7 @@ final class BigQueryContextTypeProvider implements ContextTypeProviderInterface
             // phpcs:ignore
             /** 
              * @todo validate list<schema_item>
-             * @var list<schema_item> $jsonPayloadFields
+             * @phpstan-var list<schema_item> $jsonPayloadFields
              */
             $this->jsonPayloadFields = $jsonPayloadFields;
         }

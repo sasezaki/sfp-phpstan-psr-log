@@ -29,7 +29,7 @@ use function sort;
 final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFieldSchemaJsonPayloadTypeConverterInterface
 {
     /**
-     * @param list<schema_item> $jsonPayloadFields
+     * @phpstan-param list<schema_item> $jsonPayloadFields
      */
     public function toArrayType(array $jsonPayloadFields): ConstantArrayType
     {
@@ -37,7 +37,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
     }
 
     /**
-     * @param list<schema_item> $jsonPayloadFields
+     * @phpstan-param list<schema_item> $jsonPayloadFields
      */
     public static function convertFieldsToTypes(array $jsonPayloadFields, int $nestedLevel = 0): ConstantArrayType
     {
@@ -89,7 +89,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
      * would be like {"pub_date":{"date":"2025-01-04 10:00:00.396494","timezone_type":3,"timezone":"UTC"}}.
      * if RECORD has 'date', 'timezone_type' & 'timezone' field, it would be `{pub_date: \DateTimeInterface}`
      *
-     * @param list<schema_item_minimal> $fields
+     * @phpstan-param list<schema_item_minimal> $fields
      */
     public static function reverseRecordFieldsToObjectType(array $fields): ?ObjectType
     {

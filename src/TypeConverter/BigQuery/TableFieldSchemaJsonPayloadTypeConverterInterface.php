@@ -17,7 +17,7 @@ use PHPStan\Type\Constant\ConstantArrayType;
 interface TableFieldSchemaJsonPayloadTypeConverterInterface
 {
     /**
-     * @param list<schema_item> $jsonPayloadFields
+     * @phpstan-param list<schema_item> $jsonPayloadFields
      */
     public function toArrayType(array $jsonPayloadFields): ConstantArrayType;
 }
