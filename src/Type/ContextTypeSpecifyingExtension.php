@@ -50,6 +50,23 @@ final class ContextTypeSpecifyingExtension implements MethodTypeSpecifyingExtens
             return false;
         }
 
+        if ($methodReflection->getName() === 'log' && count($node->getArgs()) === 2) {
+            return false;
+        }
+
+        if (in_array($methodReflection->getName(), [
+            'emergency',
+            'alert',
+            'critical',
+            'error',
+            'warning',
+            'notice',
+            'info',
+            'debug',
+        ], true) && count($node->getArgs()) === 1) {
+            return false;
+        }
+
         return in_array($methodReflection->getName(), [
             'log',
             'emergency',

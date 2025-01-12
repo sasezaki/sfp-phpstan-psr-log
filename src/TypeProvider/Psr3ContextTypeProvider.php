@@ -11,11 +11,19 @@ use PHPStan\Type\Type;
 
 final class Psr3ContextTypeProvider implements ContextTypeProviderInterface
 {
+    /** @var string */
+    private $exceptionClass;
+
+    public function __construct(string $exceptionClass = '\Throwable')
+    {
+        $this->exceptionClass = $exceptionClass;
+    }
+
     public function getType(): Type
     {
         return new ConstantArrayType(
             [new ConstantStringType('exception')],
-            [new ObjectType('\Throwable')],
+            [new ObjectType($this->exceptionClass)],
             [0],
             [0]
         );

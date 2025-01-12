@@ -17,10 +17,15 @@ parameters:
 		enableMessageStaticStringRule: true
 		reportContextExceptionLogLevel: 'notice'
 		contextKeyOriginalPattern: '#\A[A-Za-z0-9-]+\z#'
-	stubFiles:
-		- ../vendor/struggle-for-php/sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
+		type:
+			contextTypeSpecifyingExtension:
+				enabled: true
+		# typeProvider:
+		# 	psr3ContextType:
+		# 		exceptionClass: '\Throwable'
+	# stubFiles:
+	# 	- ../vendor/struggle-for-php/sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
 
 includes:
-# relative path can not work
-#	- %currentWorkingDirectory%/extension.neon
+	- %currentWorkingDirectory%/extension.neon
 	- %currentWorkingDirectory%/rules.neon

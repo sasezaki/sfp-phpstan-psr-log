@@ -1,3 +1,43 @@
+# includes:
+# 	- parametersSchema.neon
+
 parameters:
-	stubFiles:
-		- ../sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
+	sfpPsrLog:
+		type:
+			contextTypeSpecifyingExtension:
+				enabled: true
+				# contextTypeProvider: Sfp\PHPStan\Psr\Log\TypeConverter\Psr3ContextTypeProvider
+				contextTypeProvider: @contextTypeProvider
+		typeProvider:
+			psr3ContextType:
+				exceptionClass: '\Throwable'
+			bigQueryContextType:
+				schemaFile:
+			# 	schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
+
+services:
+	-
+		class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
+		arguments:
+			enabled: %sfpPsrLog.type.contextTypeSpecifyingExtension.enabled%
+			contextTypeProvider: %sfpPsrLog.type.contextTypeSpecifyingExtension.contextTypeProvider%
+		tags:
+			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
+
+	contextTypeProvider :
+		class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
+		arguments:
+			exceptionClass: %sfpPsrLog.typeProvider.psr3ContextType.exceptionClass%
+	# -
+	# 	class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
+	# 	arguments:
+	# 		exceptionClass: %sfpPsrLog.typeProvider.psr3ContextType.exceptionClass%
+
+	# BigQuery
+	-
+		class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+
+	-
+		class: Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider
+		arguments:
+			schemaFile: %sfpPsrLog.typeProvider.bigQueryContextType.schemaFile%
