@@ -17,15 +17,20 @@ parameters:
 		enableMessageStaticStringRule: true
 		reportContextExceptionLogLevel: 'notice'
 		contextKeyOriginalPattern: '#\A[A-Za-z0-9-]+\z#'
-		type:
-			contextTypeSpecifyingExtension:
-				enabled: true
-		# typeProvider:
-		# 	psr3ContextType:
-		# 		exceptionClass: '\Throwable'
+		# type:
+		# 	contextTypeSpecifyingExtension:
+		# 		enabled: true
+		# 		contextTypeProvider: @sfpPsrLogContextTypeProvider
+
 	# stubFiles:
 	# 	- ../vendor/struggle-for-php/sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
 
+# services:
+# 	sfpPsrLogContextTypeProvider :
+# 		class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
+# 		arguments:
+# 			exceptionClass: '\Exception'
+
 includes:
-	- %currentWorkingDirectory%/extension.neon
+	# - %currentWorkingDirectory%/extension.neon
 	- %currentWorkingDirectory%/rules.neon

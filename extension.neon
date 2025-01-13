@@ -1,43 +1,37 @@
 # includes:
 # 	- parametersSchema.neon
 
-parameters:
-	sfpPsrLog:
-		type:
-			contextTypeSpecifyingExtension:
-				enabled: true
-				# contextTypeProvider: Sfp\PHPStan\Psr\Log\TypeConverter\Psr3ContextTypeProvider
-				contextTypeProvider: @contextTypeProvider
-		typeProvider:
-			psr3ContextType:
-				exceptionClass: '\Throwable'
-			bigQueryContextType:
-				schemaFile:
-			# 	schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
+# parameters:
+# 	sfpPsrLog:
+# 		type:
+# 			contextTypeSpecifyingExtension:
+# 				enabled: true
 
-services:
-	-
-		class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
-		arguments:
-			enabled: %sfpPsrLog.type.contextTypeSpecifyingExtension.enabled%
-			contextTypeProvider: %sfpPsrLog.type.contextTypeSpecifyingExtension.contextTypeProvider%
-		tags:
-			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
-
-	contextTypeProvider :
-		class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
-		arguments:
-			exceptionClass: %sfpPsrLog.typeProvider.psr3ContextType.exceptionClass%
+# services:
+# 	-
+# 		class: Sfp\PHPStan\Psr\Log\Reflection\PsrLogLoggerReflectionExtension
+# 		tags:
+# 			- phpstan.broker.methodsClassReflectionExtension
 	# -
+	# 	class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
+	# 	arguments:
+	# 		enabled: %sfpPsrLog.type.contextTypeSpecifyingExtension.enabled%
+	# 		contextTypeProvider: @sfpPsrLogContextTypeProvider
+	# 	tags:
+	# 		# - phpstan.typeSpecifier.methodTypeSpecifyingExtension
+	# 		- phpstan.broker.methodsClassReflectionExtension
+
+	# sfpPsrLogContextTypeProvider :
 	# 	class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
 	# 	arguments:
-	# 		exceptionClass: %sfpPsrLog.typeProvider.psr3ContextType.exceptionClass%
+	# 		exceptionClass: '\Throwable'
 
-	# BigQuery
-	-
-		class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+	# # BigQuery
+	# 
+	# sfpPsrLogContextTypeProvider :
+	# 	class: Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider
+	# 	arguments:
+	# 		schemaFile: %sfpPsrLog.typeProvider.bigQueryContextType.schemaFile%
 
-	-
-		class: Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider
-		arguments:
-			schemaFile: %sfpPsrLog.typeProvider.bigQueryContextType.schemaFile%
+	# - 
+	# 	class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter

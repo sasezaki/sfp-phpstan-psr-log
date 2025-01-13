@@ -4,18 +4,5 @@ parametersSchema:
 		enableMessageStaticStringRule: bool(),
 		reportContextExceptionLogLevel: schema(string(), nullable()),
 		contextKeyOriginalPattern: schema(string(), nullable()),
-		type: structure([
-			contextTypeSpecifyingExtension: structure([
-				enabled: bool(),
-				contextTypeProvider: schema(string(), nullable())
-			])
-		]),
-		typeProvider: structure([
-			psr3ContextType: structure([
-				exceptionClass: schema(string(), nullable())
-			])
-			bigQueryContextType: structure([
-				schemaFile: schema(string(), nullable())
-			])
-		])
+		enableContextTypeRule: bool()
 	])

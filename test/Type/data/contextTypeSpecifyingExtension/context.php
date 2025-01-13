@@ -15,6 +15,6 @@ use function PHPStan\Testing\assertType;
 $logger->error('err', $context);
 
 assertType(
-    'array{first_name?: string, product?: array{id?: string}, cancellation_reason?: float|int|numeric-string, cancellation_date?: \DateTimeInterface, exception?: \Throwable}',
+    'array{exception?: \Throwable}',
     $context
 );

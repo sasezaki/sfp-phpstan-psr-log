@@ -1,6 +1,7 @@
 
 includes:
 	- ../../../../parametersSchema.neon
+	- ../../../../extension.neon
 
 parameters:
 	sfpPsrLog:
@@ -8,40 +9,13 @@ parameters:
 		enableMessageStaticStringRule: true
 		reportContextExceptionLogLevel: 'debug'
 		contextKeyOriginalPattern: null
-		type:
-			contextTypeSpecifyingExtension:
-				enabled: true
-				contextTypeProvider: @contextTypeProvider
-				# contextTypeProvider: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
-		typeProvider:
-			psr3ContextType:
-				exceptionClass: '\Throwable'
-			bigQueryContextType:
-				schemaFile: test/Type/data/contextTypeSpecifyingExtension/bigQuerySchema.json
 
-services:
-	-
-		class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
-		arguments:
-			enabled: %sfpPsrLog.type.contextTypeSpecifyingExtension.enabled%
-			contextTypeProvider: %sfpPsrLog.type.contextTypeSpecifyingExtension.contextTypeProvider%
-		tags:
-			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
+# services:
+# 	-
+# 		class: Sfp\PHPStan\Psr\Log\Type\ContextTypeSpecifyingExtension
+# 		arguments:
+# 			enabled: %sfpPsrLog.type.contextTypeSpecifyingExtension.enabled%
+# 			contextTypeProvider: @sfpPsrLogContextTypeProvider
+# 		tags:
+# 			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
 
-	contextTypeProvider :
-		class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
-		arguments:
-			exceptionClass: %sfpPsrLog.typeProvider.psr3ContextType.exceptionClass%
-	# -
-	# 	class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
-	# 	arguments:
-	# 		exceptionClass: %sfpPsrLog.typeProvider.psr3ContextType.exceptionClass%
-
-	# BigQuery
-	-
-		class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
-
-	-
-		class: Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider
-		arguments:
-			schemaFile: %sfpPsrLog.typeProvider.bigQueryContextType.schemaFile%
