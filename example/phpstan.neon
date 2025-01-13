@@ -17,13 +17,9 @@ parameters:
 		enableMessageStaticStringRule: true
 		reportContextExceptionLogLevel: 'notice'
 		contextKeyOriginalPattern: '#\A[A-Za-z0-9-]+\z#'
-		# type:
-		# 	contextTypeSpecifyingExtension:
-		# 		enabled: true
-		# 		contextTypeProvider: @sfpPsrLogContextTypeProvider
-
-	# stubFiles:
-	# 	- ../vendor/struggle-for-php/sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
+		enableContextTypeRule: false
+	stubFiles:
+		- ../vendor/struggle-for-php/sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
 
 # services:
 # 	sfpPsrLogContextTypeProvider :
@@ -32,5 +28,6 @@ parameters:
 # 			exceptionClass: '\Exception'
 
 includes:
+# relative path can not work
 	# - %currentWorkingDirectory%/extension.neon
 	- %currentWorkingDirectory%/rules.neon

@@ -88,8 +88,6 @@ final class ContextTypeRule implements Rule
             return [];
         }
 
-        // $context = $args[$contextArgumentNo];
-
         $expectedContextType = $this->contextTypeProvider->getType();
         $argContextType      = $scope->getType($args[$contextArgumentNo]->value);
 
@@ -101,7 +99,6 @@ final class ContextTypeRule implements Rule
 
         return [
             RuleErrorBuilder::message(
-                // Parameter #2 $context of method Psr\Log\LoggerInterface::notice() expects array{exception?: Throwable}, array{exception: string} given."/>
                 sprintf(
                     'Parameter #%d $context of method Psr\Log\LoggerInterface::%s() expects %s, %s given.',
                     $contextArgumentNo + 1,
