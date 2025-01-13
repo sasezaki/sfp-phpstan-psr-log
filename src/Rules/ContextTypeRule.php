@@ -9,9 +9,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\ShouldNotHappenException;
-use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
-use Throwable;
 use Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface;
 use Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider;
 
@@ -24,8 +22,6 @@ use function sprintf;
  */
 final class ContextTypeRule implements Rule
 {
-    private const ERROR_MISSED_EXCEPTION_KEY = 'Parameter $context of logger method Psr\Log\LoggerInterface::%s() requires \'exception\' key. Current scope has Throwable variable - %s';
-
     /** @var ContextTypeProviderInterface */
     private $contextTypeProvider;
 
@@ -95,7 +91,7 @@ final class ContextTypeRule implements Rule
         // $context = $args[$contextArgumentNo];
 
         $expectedContextType = $this->contextTypeProvider->getType();
-        $argContextType = $scope->getType($args[$contextArgumentNo]->value);
+        $argContextType      = $scope->getType($args[$contextArgumentNo]->value);
 
         $ret = $expectedContextType->accepts($argContextType, true);
 
@@ -116,5 +112,4 @@ final class ContextTypeRule implements Rule
             )->identifier('sfpPsrLog.contextType')->build(),
         ];
     }
-
 }

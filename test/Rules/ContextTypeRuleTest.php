@@ -7,8 +7,6 @@ namespace SfpTest\PHPStan\Psr\Log\Rules;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use Sfp\PHPStan\Psr\Log\Rules\ContextTypeRule;
-use Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface;
-use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
 
 /**
  * @extends RuleTestCase<ContextTypeRule>
@@ -16,8 +14,8 @@ use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
  */
 final class ContextTypeRuleTest extends RuleTestCase
 {
-    /** @var ?ContextTypeProviderInterface */
-    private $contextTypeProvider = null;
+    /** @phpstan-var ?ContextTypeProviderInterface */
+    private $contextTypeProvider;
 
     protected function getRule(): Rule
     {
