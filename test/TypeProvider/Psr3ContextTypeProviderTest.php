@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace SfpTest\PHPStan\Psr\Log\TypeProvider;
 
 use Exception;
-use PHPStan\Reflection\ReflectionProviderStaticAccessor;
-use PHPStan\Testing\PHPStanTestCase;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
@@ -22,18 +20,16 @@ use Throwable;
  * }
  * ```
  */
-final class Psr3ContextTypeProviderTest extends PHPStanTestCase
+final class Psr3ContextTypeProviderTest extends AbstractContextTypeProviderTestCase
 {
     /**
-     * @dataProvider \SfpTest\PHPStan\Psr\Log\TypeProvider\GeneralContextTypeDataProvider::provideTypes()
+     * @dataProvider \SfpTest\PHPStan\Psr\Log\TypeProvider\GeneralContextTypeDataProvider::provideTypes
      */
     public function testTypeProviderWithDefaultThrowable(ConstantArrayType $argType, bool $expected): void
     {
-        ReflectionProviderStaticAccessor::registerInstance($this->createReflectionProvider());
-
         $provider = new Psr3ContextTypeProvider();
 
-        $this->assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
+        self::assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
     }
 
     /**
@@ -41,13 +37,14 @@ final class Psr3ContextTypeProviderTest extends PHPStanTestCase
      */
     public function testTypeProviderWithException(ConstantArrayType $argType, bool $expected): void
     {
-        ReflectionProviderStaticAccessor::registerInstance($this->createReflectionProvider());
-
         $provider = new Psr3ContextTypeProvider(Exception::class);
 
-        $this->assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
+        self::assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
     }
 
+    /**
+     * @phpstan-return array<string, array{0: ConstantArrayType, 1: bool}>
+     */
     public static function provideExceptionTypes(): array
     {
         return [

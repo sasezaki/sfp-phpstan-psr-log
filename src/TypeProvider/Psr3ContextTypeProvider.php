@@ -7,6 +7,7 @@ namespace Sfp\PHPStan\Psr\Log\TypeProvider;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
+use PHPStan\Type\Type;
 use Throwable;
 
 final class Psr3ContextTypeProvider implements ContextTypeProviderInterface
@@ -19,7 +20,7 @@ final class Psr3ContextTypeProvider implements ContextTypeProviderInterface
         $this->exceptionClass = $exceptionClass;
     }
 
-    public function getType(): ConstantArrayType
+    public function getType(): Type
     {
         return new ConstantArrayType(
             [new ConstantStringType('exception')],

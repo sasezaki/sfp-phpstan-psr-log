@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace SfpTest\PHPStan\Psr\Log\TypeProvider;
 
-use PHPStan\Reflection\ReflectionProviderStaticAccessor;
-use PHPStan\Testing\PHPStanTestCase;
+use Exception;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
@@ -13,20 +12,18 @@ use PHPStan\Type\StringType;
 use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter;
 use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
 
-class BigQueryContextTypeProviderTest extends PHPStanTestCase
+class BigQueryContextTypeProviderTest extends AbstractContextTypeProviderTestCase
 {
     /**
-     * @dataProvider \SfpTest\PHPStan\Psr\Log\TypeProvider\GeneralContextTypeDataProvider::provideTypes()
+     * @dataProvider \SfpTest\PHPStan\Psr\Log\TypeProvider\GeneralContextTypeDataProvider::provideTypes
      */
     public function testGeneralContextType(ConstantArrayType $argType, bool $expected): void
     {
-        ReflectionProviderStaticAccessor::registerInstance($this->createReflectionProvider());
-
         $provider = new BigQueryContextTypeProvider(
             __DIR__ . '/data/bigQuerySchema.json',
             new GenericTableFieldSchemaJsonPayloadTypeConverter()
         );
-        $this->assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
+        self::assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
     }
 
     /**
@@ -34,8 +31,6 @@ class BigQueryContextTypeProviderTest extends PHPStanTestCase
      */
     public function testAgainstBigQuerySchema(ConstantArrayType $argType, bool $expected): void
     {
-        ReflectionProviderStaticAccessor::registerInstance($this->createReflectionProvider());
-
         $provider = new BigQueryContextTypeProvider(
             __DIR__ . '/data/bigQuerySchema.json',
             new GenericTableFieldSchemaJsonPayloadTypeConverter()
@@ -48,9 +43,12 @@ class BigQueryContextTypeProviderTest extends PHPStanTestCase
             [0]
         );
 
-        $this->assertFalse($provider->getType()->accepts($argType, true)->yes());
+        self::assertFalse($provider->getType()->accepts($argType, true)->yes());
     }
 
+    /**
+     * @phpstan-return array<string, array{0: ConstantArrayType, 1: bool}>
+     */
     public static function provideTypes(): array
     {
         return [

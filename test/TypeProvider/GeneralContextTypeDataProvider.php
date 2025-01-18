@@ -12,6 +12,9 @@ use Throwable;
 
 class GeneralContextTypeDataProvider
 {
+    /**
+     * @phpstan-return array<string, array{0: ConstantArrayType, 1: bool}>
+     */
     public static function provideTypes(): array
     {
         return [

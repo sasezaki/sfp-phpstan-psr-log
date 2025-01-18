@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Sfp\PHPStan\Psr\Log\TypeProvider;
 
-use PHPStan\Type\Constant\ConstantArrayType;
+use PHPStan\Type\Type;
 
 interface ContextTypeProviderInterface
 {
-    public function getType(): ConstantArrayType;
+    public function getType(): Type;
 }

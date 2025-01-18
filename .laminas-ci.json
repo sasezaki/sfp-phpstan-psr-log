@@ -1,9 +1,16 @@
 {
   "additional_checks": [
     {
-      "name": "phpstan",
+      "name": "phpstan-lowest",
       "job": {
         "php": "@lowest",
+        "command": "./vendor/bin/phpstan analyse --no-progress"
+      }
+    },
+    {
+      "name": "phpstan-latest",
+      "job": {
+        "php": "@latest",
         "command": "./vendor/bin/phpstan analyse --no-progress"
       }
     },

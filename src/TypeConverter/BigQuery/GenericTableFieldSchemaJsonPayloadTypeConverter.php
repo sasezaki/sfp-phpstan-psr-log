@@ -14,6 +14,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
+use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\Exception\UnsupportedTypeException;
 use UnexpectedValueException;
 
 use function array_column;
@@ -126,7 +127,7 @@ final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFiel
             case 'BOOLEAN':
                 return new BooleanType();
             default:
-                throw new Exception('Not supported type' . $type);
+                throw new UnsupportedTypeException('Not supported type - ' . $type);
         }
     }
 }
