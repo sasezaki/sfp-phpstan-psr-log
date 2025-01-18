@@ -9,7 +9,6 @@ use PHPStan\Testing\RuleTestCase;
 use Sfp\PHPStan\Psr\Log\Rules\ContextTypeRule;
 use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter;
 use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
-use Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface;
 
 use function sprintf;
 
@@ -19,7 +18,7 @@ use function sprintf;
  */
 final class ContextTypeRuleTest extends RuleTestCase
 {
-    /** @phpstan-var ?ContextTypeProviderInterface */
+    /** @phpstan-var null|\Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface */
     private $contextTypeProvider;
 
     protected function getRule(): Rule
