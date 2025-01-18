@@ -67,4 +67,4 @@ services:
 	# 		schemaFile:
 
 	# -
-	# 	class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
+	# 	class: Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery\GenericTableFieldSchemaJsonPayloadTypeMapper

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery;
+namespace Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery;
 
 use PHPStan\Type\Constant\ConstantArrayType;
 
@@ -14,7 +14,7 @@ use PHPStan\Type\Constant\ConstantArrayType;
  * @phpstan-type schema_item_minimal array{name: string, type: field_type}
  * @phpstan-type schema_item array{name: string, type: field_type, mode?: 'NULLABLE'|'REQUIRED'|'REPEATED', fields?: list<schema_item_minimal>}
  */
-interface TableFieldSchemaJsonPayloadTypeConverterInterface
+interface TableFieldSchemaJsonPayloadTypeMapperInterface
 {
     /**
      * @phpstan-param list<schema_item> $jsonPayloadFields

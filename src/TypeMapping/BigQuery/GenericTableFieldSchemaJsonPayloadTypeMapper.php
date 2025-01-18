@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery;
+namespace Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery;
 
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\BooleanType;
@@ -14,7 +14,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
-use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\Exception\UnsupportedTypeException;
+use Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery\Exception\UnsupportedTypeException;
 use UnexpectedValueException;
 
 use function array_column;
@@ -22,11 +22,11 @@ use function is_numeric;
 use function sort;
 
 /**
- * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
- * @phpstan-import-type schema_item_minimal from TableFieldSchemaJsonPayloadTypeConverterInterface
- * @phpstan-import-type non_record_field_type from TableFieldSchemaJsonPayloadTypeConverterInterface
+ * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeMapperInterface
+ * @phpstan-import-type schema_item_minimal from TableFieldSchemaJsonPayloadTypeMapperInterface
+ * @phpstan-import-type non_record_field_type from TableFieldSchemaJsonPayloadTypeMapperInterface
  */
-final class GenericTableFieldSchemaJsonPayloadTypeConverter implements TableFieldSchemaJsonPayloadTypeConverterInterface
+final class GenericTableFieldSchemaJsonPayloadTypeMapper implements TableFieldSchemaJsonPayloadTypeMapperInterface
 {
     /**
      * @phpstan-param list<schema_item> $jsonPayloadFields

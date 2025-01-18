@@ -7,8 +7,9 @@ namespace SfpTest\PHPStan\Psr\Log\Rules;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use Sfp\PHPStan\Psr\Log\Rules\ContextTypeRule;
-use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter;
+use Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery\GenericTableFieldSchemaJsonPayloadTypeMapper;
 use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
+use Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface;
 
 use function sprintf;
 
@@ -18,7 +19,7 @@ use function sprintf;
  */
 final class ContextTypeRuleTest extends RuleTestCase
 {
-    /** @phpstan-var null|\Sfp\PHPStan\Psr\Log\TypeProvider\ContextTypeProviderInterface */
+    /** @phpstan-var null|ContextTypeProviderInterface */
     private $contextTypeProvider;
 
     protected function getRule(): Rule
@@ -48,7 +49,7 @@ final class ContextTypeRuleTest extends RuleTestCase
       */
     public function testProcessNodeWithBigQueryContextTypeProvider(): void
     {
-        $this->contextTypeProvider = new BigQueryContextTypeProvider(__DIR__ . '/../TypeProvider/data/bigQuerySchema.json', new GenericTableFieldSchemaJsonPayloadTypeConverter());
+        $this->contextTypeProvider = new BigQueryContextTypeProvider(__DIR__ . '/../TypeProvider/data/bigQuerySchema.json', new GenericTableFieldSchemaJsonPayloadTypeMapper());
         $this->analyse([__DIR__ . '/data/contextType.php'], [
             [
                 sprintf(

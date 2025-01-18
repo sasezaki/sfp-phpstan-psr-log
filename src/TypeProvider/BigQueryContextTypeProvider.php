@@ -10,7 +10,7 @@ use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use RuntimeException;
-use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\TableFieldSchemaJsonPayloadTypeConverterInterface;
+use Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery\TableFieldSchemaJsonPayloadTypeMapperInterface;
 use UnexpectedValueException;
 
 use function file_get_contents;
@@ -20,31 +20,31 @@ use function sprintf;
 
 /**
  * @experimental
- * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeConverterInterface
+ * @phpstan-import-type schema_item from TableFieldSchemaJsonPayloadTypeMapperInterface
  */
 final class BigQueryContextTypeProvider implements ContextTypeProviderInterface
 {
     /** @var string */
     private $schemaFile;
 
-    /** @var TableFieldSchemaJsonPayloadTypeConverterInterface */
-    private $tableFieldSchemaJsonPayloadTypeConverter;
+    /** @var TableFieldSchemaJsonPayloadTypeMapperInterface */
+    private $tableFieldSchemaJsonPayloadTypeMapper;
 
     /** @phpstan-var ?list<schema_item> */
     private $jsonPayloadFields;
 
     public function __construct(
         string $schemaFile,
-        TableFieldSchemaJsonPayloadTypeConverterInterface $tableFieldSchemaJsonPayloadTypeConverter
+        TableFieldSchemaJsonPayloadTypeMapperInterface $tableFieldSchemaJsonPayloadTypeMapper
     ) {
-        $this->schemaFile                               = $schemaFile;
-        $this->tableFieldSchemaJsonPayloadTypeConverter = $tableFieldSchemaJsonPayloadTypeConverter;
+        $this->schemaFile                            = $schemaFile;
+        $this->tableFieldSchemaJsonPayloadTypeMapper = $tableFieldSchemaJsonPayloadTypeMapper;
     }
 
     public function getType(): Type
     {
         $builder = ConstantArrayTypeBuilder::createFromConstantArray(
-            $this->tableFieldSchemaJsonPayloadTypeConverter->toArrayType($this->getJsonPayloadFields())
+            $this->tableFieldSchemaJsonPayloadTypeMapper->toArrayType($this->getJsonPayloadFields())
         );
 
         $builder->setOffsetValueType(

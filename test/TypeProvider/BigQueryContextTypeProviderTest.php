@@ -9,7 +9,7 @@ use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
-use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter;
+use Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery\GenericTableFieldSchemaJsonPayloadTypeMapper;
 use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
 
 class BigQueryContextTypeProviderTest extends AbstractContextTypeProviderTestCase
@@ -21,7 +21,7 @@ class BigQueryContextTypeProviderTest extends AbstractContextTypeProviderTestCas
     {
         $provider = new BigQueryContextTypeProvider(
             __DIR__ . '/data/bigQuerySchema.json',
-            new GenericTableFieldSchemaJsonPayloadTypeConverter()
+            new GenericTableFieldSchemaJsonPayloadTypeMapper()
         );
         self::assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
     }
@@ -33,7 +33,7 @@ class BigQueryContextTypeProviderTest extends AbstractContextTypeProviderTestCas
     {
         $provider = new BigQueryContextTypeProvider(
             __DIR__ . '/data/bigQuerySchema.json',
-            new GenericTableFieldSchemaJsonPayloadTypeConverter()
+            new GenericTableFieldSchemaJsonPayloadTypeMapper()
         );
 
         $argType = new ConstantArrayType(

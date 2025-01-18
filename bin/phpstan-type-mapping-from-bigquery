@@ -4,7 +4,7 @@
 declare(strict_types=1);
 
 use PHPStan\DependencyInjection\ContainerFactory;
-use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter;
+use Sfp\PHPStan\Psr\Log\TypeMapping\BigQuery\GenericTableFieldSchemaJsonPayloadTypeMapper;
 use Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider;
 
 /**
@@ -40,7 +40,7 @@ foreach ($autoloadFiles as $deps => $autoloadFile) {
 $containerFactory = new ContainerFactory($rootDir);
 $containerFactory->create(sys_get_temp_dir() . DIRECTORY_SEPARATOR . __FILE__, [], []);
 
-$converter = new GenericTableFieldSchemaJsonPayloadTypeConverter();
+$converter = new GenericTableFieldSchemaJsonPayloadTypeMapper();
 $provider  = new BigQueryContextTypeProvider(
     'data://,' . $schema,
     $converter
