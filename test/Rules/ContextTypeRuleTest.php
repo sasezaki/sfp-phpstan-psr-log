@@ -30,8 +30,8 @@ final class ContextTypeRuleTest extends RuleTestCase
         $this->contextTypeProvider = null;
         $this->analyse([__DIR__ . '/data/contextType.php'], [
             [
-                'Parameter #2 $context of method Psr\Log\LoggerInterface::info() expects array{exception?: \Throwable}, array{exception: string} given.',
-                9,
+                'Parameter #2 $context of method Psr\Log\LoggerInterface::info() expects array{exception?: Throwable}, array{exception: string} given.',
+                13,
             ],
         ]);
     }

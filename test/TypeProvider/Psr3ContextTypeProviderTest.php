@@ -18,14 +18,14 @@ use Throwable;
  * ```
  * [@]param array{} $context
  * public function testLog(array $context) {
- * $this->logger->info('foo, $context);
+ *  $this->logger->info('foo, $context);
  * }
  * ```
  */
-class Psr3ContextTypeProviderTest extends PHPStanTestCase
+final class Psr3ContextTypeProviderTest extends PHPStanTestCase
 {
     /**
-     * @dataProvider provideTypes
+     * @dataProvider \SfpTest\PHPStan\Psr\Log\TypeProvider\GeneralContextTypeDataProvider::provideTypes()
      */
     public function testTypeProviderWithDefaultThrowable(ConstantArrayType $argType, bool $expected): void
     {
@@ -46,50 +46,6 @@ class Psr3ContextTypeProviderTest extends PHPStanTestCase
         $provider = new Psr3ContextTypeProvider(Exception::class);
 
         $this->assertSame($expected, $provider->getType()->accepts($argType, true)->yes());
-    }
-
-    public static function provideTypes(): array
-    {
-        return [
-            'array{}'                        => [
-                new ConstantArrayType([], []),
-                true,
-            ],
-            "array{non-exception: 'string'}" => [
-                new ConstantArrayType(
-                    [new ConstantStringType('non-exception')],
-                    [new ConstantStringType('string')]
-                ),
-                true,
-            ],
-            "array{exception?: 'string'}"    => [
-                new ConstantArrayType(
-                    [new ConstantStringType('exception')],
-                    [new ConstantStringType('string')],
-                    [0],
-                    [0]
-                ),
-                false,
-            ],
-            "array{exception?: \Throwable}"  => [
-                new ConstantArrayType(
-                    [new ConstantStringType('exception')],
-                    [new ObjectType(Throwable::class)],
-                    [0],
-                    [0]
-                ),
-                true,
-            ],
-            "array{exception?: \Exception}"  => [
-                new ConstantArrayType(
-                    [new ConstantStringType('exception')],
-                    [new ObjectType(Exception::class)],
-                    [0],
-                    [0]
-                ),
-                true,
-            ],
-        ];
     }
 
     public static function provideExceptionTypes(): array
