@@ -41,6 +41,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
+    "bin": ["bin/phpstan-type-mapping-from-bigquery"],
     "extra": {
         "phpstan": {
             "includes": [
