@@ -19,7 +19,7 @@ use function sprintf;
  */
 final class ContextTypeRuleTest extends RuleTestCase
 {
-    /** @phpstan-var null|ContextTypeProviderInterface */
+    /** @var null|ContextTypeProviderInterface */
     private $contextTypeProvider;
 
     protected function getRule(): Rule
