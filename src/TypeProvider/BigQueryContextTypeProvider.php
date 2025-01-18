@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Sfp\PHPStan\Psr\Log\TypeProvider;
 
 use Exception;
+use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantArrayTypeBuilder;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ObjectType;
-use PHPStan\Type\Type;
 use RuntimeException;
 use Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\TableFieldSchemaJsonPayloadTypeConverterInterface;
 use UnexpectedValueException;
@@ -41,7 +41,7 @@ final class BigQueryContextTypeProvider implements ContextTypeProviderInterface
         $this->tableFieldSchemaJsonPayloadTypeConverter = $tableFieldSchemaJsonPayloadTypeConverter;
     }
 
-    public function getType(): Type
+    public function getType(): ConstantArrayType
     {
         $builder = ConstantArrayTypeBuilder::createFromConstantArray(
             $this->tableFieldSchemaJsonPayloadTypeConverter->toArrayType($this->getJsonPayloadFields())
@@ -95,7 +95,7 @@ final class BigQueryContextTypeProvider implements ContextTypeProviderInterface
             }
 
             // phpcs:ignore
-            /** 
+            /**
              * @todo validate list<schema_item>
              * @phpstan-var list<schema_item> $jsonPayloadFields
              */

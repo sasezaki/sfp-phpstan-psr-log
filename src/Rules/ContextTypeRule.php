@@ -60,7 +60,6 @@ final class ContextTypeRule implements Rule
 
         $methodName = $node->name->toLowerString();
 
-        $logLevels         = [$methodName];
         $contextArgumentNo = 1;
         if ($methodName === 'log') {
             if (count($args) < 2) {

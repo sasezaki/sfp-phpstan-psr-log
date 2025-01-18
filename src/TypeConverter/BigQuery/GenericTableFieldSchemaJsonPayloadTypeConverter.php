@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery;
 
-use Exception;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\Constant\ConstantArrayType;
