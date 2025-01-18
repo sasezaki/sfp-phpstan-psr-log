@@ -13,9 +13,8 @@ parameters:
 	paths:
 		- %currentWorkingDirectory%/example/src
 	sfpPsrLog:
+		enableLogLevelMethodRule: true
 		enableContextTypeRule: true
-	stubFiles:
-		- ../vendor/struggle-for-php/sfp-stubs-psr-log/stubs-for-throwable/LoggerInterface.phpstub
 
 # services:
 # 	sfpPsrLogContextTypeProvider :

@@ -4,6 +4,7 @@ parametersSchema:
 		enableMessageStaticStringRule: bool(),
 		reportContextExceptionLogLevel: schema(string(), nullable()),
 		contextKeyOriginalPattern: schema(string(), nullable()),
+		enableLogLevelMethodRule: bool()
 		enableContextTypeRule: bool()
 	])
 
@@ -13,6 +14,7 @@ parameters:
 		enableMessageStaticStringRule: true
 		reportContextExceptionLogLevel: 'debug'
 		contextKeyOriginalPattern: null
+		enableLogLevelMethodRule: false
 		enableContextTypeRule: false
 
 conditionalTags:
@@ -20,6 +22,8 @@ conditionalTags:
 		phpstan.rules.rule: %sfpPsrLog.enableContextRequireExceptionKeyRule%
 	Sfp\PHPStan\Psr\Log\Rules\MessageStaticStringRule:
 		phpstan.rules.rule: %sfpPsrLog.enableMessageStaticStringRule%
+	Sfp\PHPStan\Psr\Log\Rules\LogMethodLevelRule:
+		phpstan.rules.rule: %sfpPsrLog.enableLogLevelMethodRule%
 	Sfp\PHPStan\Psr\Log\Rules\ContextTypeRule:
 		phpstan.rules.rule: %sfpPsrLog.enableContextTypeRule%
 
@@ -41,6 +45,9 @@ services:
 			reportContextExceptionLogLevel: %sfpPsrLog.reportContextExceptionLogLevel%
 	-
 		class: Sfp\PHPStan\Psr\Log\Rules\MessageStaticStringRule
+
+	-
+		class: Sfp\PHPStan\Psr\Log\Rules\LogMethodLevelRule
 
 	-
 		class: Sfp\PHPStan\Psr\Log\Rules\ContextTypeRule

@@ -1,8 +1,0 @@
-parametersSchema:
-	sfpPsrLog: structure([
-		enableContextRequireExceptionKeyRule: bool(),
-		enableMessageStaticStringRule: bool(),
-		reportContextExceptionLogLevel: schema(string(), nullable()),
-		contextKeyOriginalPattern: schema(string(), nullable()),
-		enableContextTypeRule: bool()
-	])
