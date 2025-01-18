@@ -23,21 +23,15 @@ final class LogMethodLevelRuleTest extends RuleTestCase
     {
         $this->analyse([__DIR__ . '/data/logMethodLevel.php'], [
             [
-                <<<'MESSAGE'
-Parameter #1 $level of method Psr\Log\LoggerInterface::log() expects 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning', 'panic' given.
-MESSAGE,
+                "Parameter #1 \$level of method Psr\Log\LoggerInterface::log() expects 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning', 'panic' given.",
                 23,
             ],
             [
-                <<<'MESSAGE'
-Parameter #1 $level of method Psr\Log\LoggerInterface::log() expects 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning'.
-MESSAGE,
+                "Parameter #1 \$level of method Psr\Log\LoggerInterface::log() expects 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning'.",
                 24,
             ],
             [
-                <<<'MESSAGE'
-Parameter #1 $level of method Psr\Log\LoggerInterface::log() expects 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning', 'foo, panic' given.
-MESSAGE,
+                "Parameter #1 \$level of method Psr\Log\LoggerInterface::log() expects 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning', 'foo, panic' given.",
                 25,
             ],
         ]);
