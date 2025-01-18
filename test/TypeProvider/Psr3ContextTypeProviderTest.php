@@ -38,18 +38,18 @@ class Psr3ContextTypeProviderTest extends PHPStanTestCase
     public function provideTypes(): array
     {
         return [
-            'array{}'                         => [
+            'array{}'                        => [
                 new ConstantArrayType([], []),
                 true,
             ],
-            "array{non-exception: 'string'}"  => [
+            "array{non-exception: 'string'}" => [
                 new ConstantArrayType(
                     [new ConstantStringType('non-exception')],
                     [new ConstantStringType('string')]
                 ),
                 true,
             ],
-            "array{exception?: 'string'}"     => [
+            "array{exception?: 'string'}"    => [
                 new ConstantArrayType(
                     [new ConstantStringType('exception')],
                     [new ConstantStringType('string')],
@@ -58,7 +58,7 @@ class Psr3ContextTypeProviderTest extends PHPStanTestCase
                 ),
                 false,
             ],
-            "array{exception?: '\Throwable'}" => [
+            "array{exception?: \Throwable}"  => [
                 new ConstantArrayType(
                     [new ConstantStringType('exception')],
                     [new ObjectType(Throwable::class)],
@@ -67,7 +67,7 @@ class Psr3ContextTypeProviderTest extends PHPStanTestCase
                 ),
                 true,
             ],
-            "array{exception?: '\Exception'}" => [
+            "array{exception?: \Exception}"  => [
                 new ConstantArrayType(
                     [new ConstantStringType('exception')],
                     [new ObjectType(Exception::class)],
