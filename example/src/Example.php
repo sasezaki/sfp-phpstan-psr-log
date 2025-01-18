@@ -39,7 +39,7 @@ class Example
 
     public function reportContextExceptionLogLevel(Throwable $throwable): void
     {
-        // phpstan.neon sfpPsrLog.reportContextExceptionLogLevel is 'notice'
+        // phpstan.enableContextTypeRule.neon sfpPsrLog.reportContextExceptionLogLevel is 'notice'
         // so bellow would not report.
         $this->logger->debug('foo');
     }

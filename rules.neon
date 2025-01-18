@@ -39,20 +39,13 @@ services:
 		class: Sfp\PHPStan\Psr\Log\Rules\ContextRequireExceptionKeyRule
 		arguments:
 			reportContextExceptionLogLevel: %sfpPsrLog.reportContextExceptionLogLevel%
-		tags:
-			- phpstan.rules.rule
-
 	-
 		class: Sfp\PHPStan\Psr\Log\Rules\MessageStaticStringRule
-		tags:
-			- phpstan.rules.rule
 
 	-
 		class: Sfp\PHPStan\Psr\Log\Rules\ContextTypeRule
 		arguments:
 			contextTypeProvider: @sfpPsrLogContextTypeProvider
-		tags:
-			- phpstan.rules.rule
 
 	sfpPsrLogContextTypeProvider :
 		class: Sfp\PHPStan\Psr\Log\TypeProvider\Psr3ContextTypeProvider
@@ -60,11 +53,11 @@ services:
 			exceptionClass: '\Throwable'
 
 	# # BigQuery
-	# 
+	#
 	# sfpPsrLogContextTypeProvider :
 	# 	class: Sfp\PHPStan\Psr\Log\TypeProvider\BigQueryContextTypeProvider
 	# 	arguments:
-	# 		schemaFile: 
+	# 		schemaFile:
 
-	# - 
+	# -
 	# 	class: Sfp\PHPStan\Psr\Log\TypeConverter\BigQuery\GenericTableFieldSchemaJsonPayloadTypeConverter
