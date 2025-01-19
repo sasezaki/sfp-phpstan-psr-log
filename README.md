@@ -4,19 +4,18 @@
 [![License](https://poser.pugx.org/struggle-for-php/sfp-phpstan-psr-log/license)](https://packagist.org/packages/struggle-for-php/sfp-phpstan-psr-log)
 [![Psalm coverage](https://shepherd.dev/github/struggle-for-php/sfp-phpstan-psr-log/coverage.svg)](https://shepherd.dev/github/struggle-for-php/sfp-phpstan-psr-log)
 
+> [!IMPORTANT]
+> The next version `0.25.0` will have a BC break. Please refer `Stubs` section.
+
 `struggle-for-php/sfp-phpstan-psr-log` is extra strict and opinionated psr/log (psr-3) rules for PHPStan.
 
 * [PHPStan](https://phpstan.org/)
 * [PSR-3: Logger Interface - PHP-FIG](https://www.php-fig.org/psr/psr-3/)
 * [PSR-3 Meta Document](https://www.php-fig.org/psr/psr-3/meta/)
 
-> [!IMPORTANT]
-> The next version `0.25.0` will have a BC break.
+## Recommendation Settings
 
-- please refer `Stubs` section.
-
-### Recommendation Settings
-write these parameters to your project's `phpstan.neon`.
+Write these parameters to your project's `phpstan.neon`.
 
 ```neon
 parameters:
@@ -34,28 +33,29 @@ parameters:
 
 To try out the changes in the next version,
 
-- DELETE `vendor/struggle-for-php/sfp-phpstan-psr-log/extension.neon` from your `phpstan.neon`
+DELETE `vendor/struggle-for-php/sfp-phpstan-psr-log/extension.neon` line from your `phpstan.neon`
 
-```
+```neon
 includes:
     - vendor/struggle-for-php/sfp-phpstan-psr-log/extension.neon
 ```
 
 and, set parameters `enableLogLevelMethodRule` and `enableContextTypeRule`
 
-```
+```neon
 parameters:
     sfpPsrLog:
         enableLogLevelMethodRule: true # default:false
         enableContextTypeRule: true # default:false
 ```
 
-### about stub
+### About stub
+
 Currently, this extension depends on our psr/log stub to serve strictness.
 
 * eg.
-    * `@param LogLevel::*  $level` at `log()` method
-    * `@param array{exception?: \Throwable} $context`
+  * `@param LogLevel::*  $level` at `log()` method
+  * `@param array{exception?: \Throwable} $context`
 
 See [psr/log stub](https://github.com/struggle-for-php/sfp-stubs-psr-log) repository page to get more detail.
 
@@ -136,7 +136,7 @@ $logger->info('user {user_id} gets an error {error} .', ['user_id' => $user_id])
 | sfpPsrLog.contextKeyOriginalPattern |
 
 * reports when context key is not matched you defined pattern.
-    * if `contextKeyOriginalPattern` parameter is not set, this check would be ignored.
+  * if `contextKeyOriginalPattern` parameter is not set, this check would be ignored.
 
 #### Configuration
 
