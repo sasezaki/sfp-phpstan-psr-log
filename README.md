@@ -11,16 +11,17 @@
 * [PSR-3 Meta Document](https://www.php-fig.org/psr/psr-3/meta/)
 
 > [!IMPORTANT]
-> Since `0.20.0`, changed default rule settings.
+> The next version `0.25.0` will have a BC break.
 
-* MessageStaticStringRule is enabled by default.
-* ContextRequireExceptionKeyRule is disabled by default.
-* [Recommendation] write these parameters to your project's `phpstan.neon`.
+- please refer `Stubs` section.
+
+### Recommendation Settings
+write these parameters to your project's `phpstan.neon`.
 
 ```neon
 parameters:
     sfpPsrLog:
-        enableMessageStaticStringRule: true
+        enableMessageStaticStringRule: false # default:true
         enableContextRequireExceptionKeyRule: true
         reportContextExceptionLogLevel: 'info'
         contextKeyOriginalPattern: '#\A[A-Za-z0-9-_]+\z#'
@@ -28,7 +29,29 @@ parameters:
 
 ## Stubs
 
-This extension depends on our psr/log stub to serve strictness.
+> [!IMPORTANT]
+> include psr/log stub be planned to dropped in next release.
+
+To try out the changes in the next version,
+
+- DELETE `vendor/struggle-for-php/sfp-phpstan-psr-log/extension.neon` from your `phpstan.neon`
+
+```
+includes:
+    - vendor/struggle-for-php/sfp-phpstan-psr-log/extension.neon
+```
+
+and, set parameters `enableLogLevelMethodRule` and `enableContextTypeRule`
+
+```
+parameters:
+    sfpPsrLog:
+        enableLogLevelMethodRule: true # default:false
+        enableContextTypeRule: true # default:false
+```
+
+### about stub
+Currently, this extension depends on our psr/log stub to serve strictness.
 
 * eg.
     * `@param LogLevel::*  $level` at `log()` method
@@ -221,11 +244,9 @@ To use this extension, require it in [Composer](https://getcomposer.org/):
 composer require --dev struggle-for-php/sfp-phpstan-psr-log
 ```
 
-If you also install [phpstan/extension-installer](https://github.com/phpstan/extension-installer) then you're all set.
-
 ### Manual installation
 
-If you don't want to use `phpstan/extension-installer`, include extension.neon & rules.neon in your project's PHPStan config:
+include extension.neon & rules.neon in your project's PHPStan config:
 
 ```neon
 includes:
